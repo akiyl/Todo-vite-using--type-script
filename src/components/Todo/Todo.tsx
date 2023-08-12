@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import TodoContainer from "../TodoContainer/TodoContainer";
 
 const Todo = () => {
-  const [todoList, setTodoList] = useState<string[]>([]);
+  interface TodoItem {
+    id: number;
+    task: string;
+    status: "active" | "completed";
+  }
+
+  const [todoList, setTodoList] = useState<TodoItem[]>([]);
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
@@ -12,36 +18,55 @@ const Todo = () => {
     }
   }, []);
 
-  const clearBtn = () => {
-    localStorage.clear();
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todoList));
+  }, [todoList]);
+
+  const clearTodoList = () => {
+    setTodoList([]);
+    localStorage.removeItem("todos");
   };
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleAddTodo = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Check if the new task is empty
     if (newTask.trim() === "") {
-      return; // Return early if no task
+      return;
     }
 
-    // Create a copy of the existing todo list and add the new task to it
-    const updatedTodoList = [...todoList, newTask];
+    const newTodo: TodoItem = {
+      id: Date.now(),
+      task: newTask.trim(),
+      status: "active",
+    };
 
-    // Update the todo list
-    setTodoList(updatedTodoList);
-
-    // Store the updated todo list in local storage
-    localStorage.setItem("todos", JSON.stringify(updatedTodoList));
-
-    // Reset the new task input
+    setTodoList((prevTodoList) => [...prevTodoList, newTodo]);
     setNewTask("");
+  };
 
-    console.log(localStorage);
-    console.log(newTask);
+  const handleToggleStatus = (taskId: number) => {
+    setTodoList((prevTodoList) =>
+      prevTodoList.map((todo) =>
+        todo.id === taskId
+          ? {
+              ...todo,
+              status: todo.status === "active" ? "completed" : "active",
+            }
+          : todo
+      )
+    );
+  };
+
+  const handleDeleteTodo = (taskId: number) => {
+    setTodoList((prevTodoList) =>
+      prevTodoList.filter((todo) => todo.id !== taskId)
+    );
   };
 
   return (
     <div className="form-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleAddTodo}>
         <input
           type="text"
           placeholder="Enter a todo"
@@ -49,10 +74,17 @@ const Todo = () => {
           onChange={(e) => setNewTask(e.target.value)}
         />
         <button type="submit">Add Todo</button>
-        <button onClick={clearBtn}>clear </button>
+        <button type="button" onClick={clearTodoList}>
+          Clear
+        </button>
       </form>
-      <TodoContainer todoList={todoList} />
+      <TodoContainer
+        todoList={todoList}
+        onToggleStatus={handleToggleStatus}
+        onDeleteTodo={handleDeleteTodo}
+      />
     </div>
   );
 };
+
 export default Todo;

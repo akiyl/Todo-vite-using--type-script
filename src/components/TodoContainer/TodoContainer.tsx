@@ -1,32 +1,37 @@
 import React, { useState } from "react";
-
-interface TodoContainerProps {
-  todoList: string[];
+interface TodoItem {
+  id: number;
+  task: string;
+  status: "active" | "completed";
 }
-const TodoContainer = ({ todoList }: TodoContainerProps) => {
-  // const arr = [todoList];
-  // const [TotalTask, setTotalTask] = useState<number>(0);
-  const onDelete = (e: any) => {
-    console.log(e.target.index);
-  };
+interface TodoContainerProps {
+  todoList: TodoItem[];
+  onToggleStatus: (taskId: number) => void;
+  onDeleteTodo: (taskId: number) => void;
+}
+const TodoContainer: React.FC<TodoContainerProps> = ({
+  todoList,
+  onToggleStatus,
+  onDeleteTodo,
+}) => {
   return (
-    <div className="Todo-container">
-      {todoList.length > 0
-        ? todoList.map((tasks, index) => {
-            return (
-              <div key={index} className="">
-                {tasks}
-                <button className="delete-btn" onClick={onDelete}>
-                  {" "}
-                  delete
-                </button>
-                {/* {console.log(arr)} */}
-              </div>
-            );
-          })
-        : ""}
-    </div>
+    <ul>
+      {todoList.map((todo) => (
+        <li key={todo.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={todo.status === "completed"}
+              onChange={() => onToggleStatus(todo.id)}
+            />
+            {todo.task}
+          </label>
+          <button type="button" onClick={() => onDeleteTodo(todo.id)}>
+            Delete
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 };
-
 export default TodoContainer;
