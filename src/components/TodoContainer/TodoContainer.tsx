@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 
 interface TodoContainerProps {
-  task: string[];
+  todoList: string[];
 }
-const TodoContainer = ({ task }: TodoContainerProps) => {
-  const arr = [task];
+const TodoContainer = ({ todoList }: TodoContainerProps) => {
+  // const arr = [todoList];
   // const [TotalTask, setTotalTask] = useState<number>(0);
-
+  const onDelete = (e: any) => {
+    console.log(e.target.index);
+  };
   return (
     <div className="Todo-container">
-      {arr.length > 0
-        ? arr.map((tasks, index) => {
+      {todoList.length > 0
+        ? todoList.map((tasks, index) => {
             return (
               <div key={index} className="">
                 {tasks}
+                <button className="delete-btn" onClick={onDelete}>
+                  {" "}
+                  delete
+                </button>
                 {/* {console.log(arr)} */}
               </div>
             );
