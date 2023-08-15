@@ -1,46 +1,38 @@
 import { useState } from "react";
-import sun from "../images/icon-Sun.svg";
-import moon from "../images/icon-moon.svg";
-import "./Header.css";
-// import { DarkMode } from "../Todo/darkmode";
 
-const DarkMode = () => {
-  return (
-    <div className="Darkmode">
-      <img src={sun} alt="" />
-    </div>
-  );
-};
-const LightMode = () => {
-  return (
-    <div className="Lightmode">
-      <img src={moon} alt="" />
-    </div>
-  );
-};
+import sun from "../images/icon-sun.svg";
+import moon from "../images/icon-moon.svg";
+import "../Header/Header.css";
 
 const Header = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, settheme] = useState("light");
 
-  const ToggleTheme = () => {
+  const handleTheme = (e: string) => {
+    if (e === "light") {
+      return sun;
+    } else if (e === "dark") {
+      return moon;
+    }
+  };
+  const handleCLick = () => {
     if (theme === "light") {
-      setTheme("dark");
-    } else {
-      setTheme("light");
+      settheme("dark");
+    } else if (theme === "dark") {
+      settheme("light");
     }
   };
 
   return (
-    <header className="head">
+    <div className={theme}>
       <div className="logo">
-        <h1 className="heading">Todo</h1>
-      </div>
-      <div className="theme-buttons">
-        <button className="switch-theme" onClick={ToggleTheme}>
-          {theme === "dark" ? <DarkMode /> : <LightMode />}
+        <div className="heading">Todo</div>
+        <button className={theme} onClick={handleCLick}>
+          {" "}
+          <img src={handleTheme(theme)} alt="" />
         </button>
       </div>
-    </header>
+    </div>
   );
 };
+
 export default Header;

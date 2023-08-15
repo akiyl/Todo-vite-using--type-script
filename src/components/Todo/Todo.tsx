@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import TodoContainer from "../TodoContainer/TodoContainer";
+import Header from "../Header/Header";
 
 const Todo = () => {
   interface TodoItem {
@@ -65,25 +66,28 @@ const Todo = () => {
   };
 
   return (
-    <div className="form-container">
-      <form onSubmit={handleAddTodo}>
-        <input
-          type="text"
-          placeholder="Enter a todo"
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
+    <main className="">
+      <Header />
+      <div className="form-container">
+        <form onSubmit={handleAddTodo}>
+          <input
+            type="text"
+            placeholder="Enter a todo"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+          <button type="submit">Add Todo</button>
+          <button type="button" onClick={clearTodoList}>
+            Clear
+          </button>
+        </form>
+        <TodoContainer
+          todoList={todoList}
+          onToggleStatus={handleToggleStatus}
+          onDeleteTodo={handleDeleteTodo}
         />
-        <button type="submit">Add Todo</button>
-        <button type="button" onClick={clearTodoList}>
-          Clear
-        </button>
-      </form>
-      <TodoContainer
-        todoList={todoList}
-        onToggleStatus={handleToggleStatus}
-        onDeleteTodo={handleDeleteTodo}
-      />
-    </div>
+      </div>
+    </main>
   );
 };
 

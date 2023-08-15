@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Todo from "./Todo/Todo";
 import "./index.css";
-import Header from "./Header/Header";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -10,7 +9,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       Hello world!
     </h1> */}
 
-    <Header />
     <Todo />
   </React.StrictMode>
 );

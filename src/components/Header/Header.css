@@ -3,9 +3,25 @@
   margin: 0;
   box-sizing: border-box;
 }
-.Darkmode {
+#root {
+  width: 100vw;
+  height: 100vh;
   background-color: black;
 }
 .head {
   width: 500px;
+}
+.dark {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 300px;
+  background-image: url(../images/bg-desktop-dark.jpg);
+}
+.light {
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  height: 300px;
+  background-image: url(../images/bg-desktop-light.jpg);
 }
