@@ -3,25 +3,32 @@
   margin: 0;
   box-sizing: border-box;
 }
-#root {
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-}
+
 .head {
   width: 500px;
 }
 .dark {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 300px;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   background-image: url(../images/bg-desktop-dark.jpg);
 }
 .light {
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  height: 300px;
   background-image: url(../images/bg-desktop-light.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 40% 50%;
+}
+h1 {
+  letter-spacing: 15px;
+  font-size: 37px;
+  color: #fafafa;
+}
+button {
+  background: none;
+  border: none;
 }
